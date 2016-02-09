@@ -1,0 +1,1032 @@
+
+<!-- template for Project 1 - CS 422 - Spring 2016 - Andrew Johnson -->
+
+<!DOCTYPE html>    
+<head>
+    <meta charset="utf-8">
+    <title>Shower The People</title>
+	
+	<!-- Get version 1.5.0 of Fabric.js from CDN -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.min.js" ></script> 
+<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.1.0/annyang.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/buzz/1.1.10/buzz.min.js"></script>    
+<video height="360" width="640" id="video2" style="display: none">
+  <source src="http://www.quirksmode.org/html5/videos/big_buck_bunny.mp4">
+  <source src="http://www.quirksmode.org/html5/videos/big_buck_bunny.ogv">
+</video>	 
+<body>
+		<!-- canvas tag for Fabric.js to draw into -->
+    <!-- set this to some appropriate size for your development work -->
+    <!-- we will use width="4140" height="2200" for presentations and evaluation -->
+		<canvas id="c" width="4140" height="2200" style="border:2px solid black;" ></canvas>
+</body>
+ 
+<script>
+
+(function() {
+
+// within the code below I assume I am drawing into a 1860x990 box
+// then I can scale the group to whatever size the final canvas is
+  var localHeight = 990;
+  var localWidth = 1860;
+    
+  var canvas = this.__canvas = new fabric.Canvas('c');
+if (annyang) {
+  // Let's define our first command. First the text we expect, and then the function it should call
+  var commands = {
+    'update': function() {
+    gusr.fs=gfs;
+    gusr.ls=gls;
+        gusr.ss=gss;
+        gusr.tem=gtem;
+        gusr.th=gth;
+        gusr.ws=gws;
+        if(gusr.ls=="English")
+            responsiveVoice.speak(gusr.name+ "Your Preferences updated successfully");
+        else 
+            responsiveVoice.speak(gusr.name+ "Sus preferencias se han actualizado correctamente");
+    },
+    'news':function(){
+        if(gusr.ls=="English")
+        {
+          responsiveVoice.speak("Hello "+gusr.name);   
+          responsiveVoice.speak("Polls: Trump, Sanders hold leads");
+          responsiveVoice.speak("Cop sues estate of teen he killed");
+          responsiveVoice.speak("Super Bowl ad sparks backlash");
+        }
+        else
+        {
+          responsiveVoice.speak("Hola "+gusr.name);   
+          responsiveVoice.speak("Sondeo : Trump , cables de retención Sanders");
+          responsiveVoice.speak("Cop demanda raíces de adolescente que mató");
+          responsiveVoice.speak("Anuncio de Super Bowl chispas reacción violenta");   
+        }
+    },
+    'Watch movie':function(){
+      canvas.add(video2);
+  video2.getElement().play();
+  fabric.util.requestAnimFrame(function render() {
+  canvas.renderAll();
+  fabric.util.requestAnimFrame(render);
+   });    
+  canvas.deactivateAll();
+    }  
+  };
+
+  // Add our commands to annyang
+  annyang.addCommands(commands);
+
+  // Start listening. You can call this here, or attach this call to an event, button, etc.
+  annyang.start();
+}
+  // set background to blue to make it easier to see it
+  //canvas.backgroundColor = "#5555F5"; 
+    
+// create rectangles for the various walls
+//var backWall = new fabric.Rect({
+//  left: 0,
+//  top: 0,
+//  fill: 'white', 
+//  opacity:0.01,    
+//  stroke: 'black',
+//  width: 450,
+//  height: localHeight,
+//  angle: 0
+//});
+//
+//// the walls will not be selectable or movable
+//backWall.hasControls = backWall.hasBorders = false;
+//backWall.lockMovementX = backWall.lockMovementY = true;
+//
+//var sideWall = new fabric.Rect({
+//  left: 450,
+//  top: 0,
+//  fill: 'white',
+//  opacity: 0.01,    
+//  stroke: 'black',
+//  width: 960,
+//  height: localHeight,
+//  angle: 0
+//});
+//
+//sideWall.hasControls = sideWall.hasBorders = false;
+//sideWall.lockMovementX = sideWall.lockMovementY = true;
+//
+//var frontWall = new fabric.Rect({
+//  left: 1410,
+//  top: 0,
+//  fill: 'white',
+//  opacity: 0.01,    
+//  stroke: 'black',
+//  width: 450,
+//  height: localHeight,
+//  angle: 0
+//});
+//
+//frontWall.hasControls = frontWall.hasBorders = false;
+//frontWall.lockMovementX = frontWall.lockMovementY = true;
+
+// create a rectangle for the water spout for the bath tub
+
+
+
+// the spout is selectable and movable
+// this is a nice part of fabric where you can interactively move elements around
+// on the canvas to see what locations and sizes work better, then lock them down
+//bathSpout.hasControls = bathSpout.hasBorders = false;
+//bathSpout.lockMovementX = bathSpout.lockMovementY = true;
+
+
+// create a circle for the shower head location
+
+
+
+// create a simple interactive control - a circle with some text inside it
+// whenever you click in the circle the text and colour will swap between
+// blue/cold and red/hot
+
+//var tempText = new fabric.Text('default', { left: 1500, top: 90, fontFamily: 'Arial', fontSize: 40, fontWeight: 'italic', originX: 'center',
+//  originY: 'center',});
+//tempText.hasControls = tempText.hasBorders = false;
+//tempText.lockMovementX = tempText.lockMovementY = true;
+//tempText.selectable = false
+//tempText.evented = false
+//
+//var waterControl = new fabric.Circle({
+//  left: 1500,
+//  top: 90,
+//  originX: 'center',
+//  originY: 'center',
+//  fill: 'grey',
+//  radius: 50
+//});
+//
+//waterControl.hasControls = waterControl.hasBorders = false;
+//waterControl.lockMovementX = waterControl.lockMovementY = true;
+
+
+// variable to hold the current water temperature
+
+//var waterTemp = 0;
+//
+//// function to change the color and text on the control
+//
+//function updateWaterTemp() {
+//if (waterTemp > 0.5) {
+//  waterControl.fill = 'red';
+//  tempText.text = "hot";
+//  } 
+//else {
+//  waterControl.fill = 'aqua';
+//  tempText.text = "cold";
+//  }
+//}
+//
+//// set the color and text on the control
+//updateWaterTemp();
+//
+//// create a callback for the user clicking on the control
+//
+//waterControl.on('selected', function() {
+//  //console.log('selected a rectangle');
+//  waterTemp = 1 - waterTemp;
+//  updateWaterTemp();
+//  canvas.deactivateAll(); // deselect everything
+//});
+//my code 
+var bathSpout = new fabric.Rect({
+  left: 3700,
+  top: 2000,
+  originX: 'center',
+  originY: 'center',
+  fill: 'grey',
+  stroke: 'black',
+  width: 120,
+  height: 60,
+  angle: 0
+}); 
+var showerHead = new fabric.Circle({
+  radius: 40, fill: 'grey', left: 3700, top: 200,   originX: 'center',
+  originY: 'center'
+});
+
+showerHead.hasControls = showerHead.hasBorders = false;
+showerHead.lockMovementX = showerHead.lockMovementY = true;     
+var iControl = new fabric.Circle({
+  left: 700,
+  top: 700,
+  originX: 'center',
+  originY: 'center',
+  fill: 'rgb(194, 209, 239)',
+  opacity:0.6,    
+  radius: 40
+});
+var iControltext = new fabric.Text('default', { left: iControl.left, top: iControl.top, fontFamily: 'Arial', fontSize: 10, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',
+  name: 'bobo',}); 
+iControltext.text="  Start\nEmpezar";
+iControltext.selectable=false;
+iControltext.evented=false;    
+var gfs="Off",gws="Bathtub",gss="Water Saver",gtem=36,gth="Chicago Skyline",gls="English",gdr="Open";    
+var lang=0; 
+var jm={name:"James",fs:"Off",ws:"Shower",ss:"Power Spray",tem:36,th:"Chicago Skyline",ls:"English",dr:"Open"};   
+var ma={name:"Mary",fs:"high",ws:"Bathtub",ss:"Water Saver",tem:34,th:"Chicago Night",ls:"English",dr:"Closed"}; 
+var jh={name:"John",fs:"Medium",ws:"Shower",ss:"Water Saver",tem:38,th:"Disney",ls:"English",dr:"Open"};
+var gue1={name:"Guest 1",fs:"Medium",ws:"Shower",ss:"Water Saver",tem:38,th:"Disney",ls:"English",dr:"Open"};
+var gue2={name:"Guest 2",fs:"High",ws:"Shower",ss:"Water Saver",tem:38,th:"Disney",ls:"English",dr:"Open"};    
+var gusr=jm;
+console.log(gusr);    
+iControl.on('mouseup',function() {    
+  //console.log(iControl);
+//  canvas.getObjects().forEach(
+//    function(d){
+//        canvas.remove(d);
+//    });     
+    canvas.clear();
+   var video2El = document.getElementById('video2');
+   var video2 = new fabric.Image(video2El, {
+  left: 3700,
+  top: 650,
+  angle: 0,
+  originX: 'center',
+  originY: 'center'
+}); 
+     
+  canvas.add(iControl);
+  canvas.add(bathSpout,showerHead,path1,path2);  
+  function update() {
+    gusr.fs=gfs;
+    gusr.ls=gls;
+        gusr.ss=gss;
+        gusr.tem=gtem;
+        gusr.th=gth;
+        gusr.ws=gws;
+        if(gusr.ls=="English")
+            responsiveVoice.speak(gusr.name+ "Your Preferences updated successfully");
+        else 
+            responsiveVoice.speak(gusr.name+ "Sus preferencias se han actualizado correctamente");
+  }
+      
+  function fschange()
+  {
+      if(gusr.fs!="Off"||gfs!="Off")
+          if(gusr.ws=="Bathtub"||gws=="Bathtub")
+          {     
+              bathSpout.fill='green';
+              gusr.dr="Closed"
+              setTimeout(function(){
+        responsiveVoice.speak("Bathtub is full and Ready now");
+        },60000);
+              showerHead.fill='grey';
+          }
+          else{
+              showerHead.fill='green';
+              bathSpout.fill='grey';
+          }
+      else
+         bathSpout.fill=showerHead.fill='grey'; 
+  }
+  
+    
+  function userch(str)
+  {
+      if(str=="Mary")
+      {
+        responsiveVoice.speak("Welcome Mary the bath tub will be filled in 2 minutes");
+        setTimeout(function(){
+        responsiveVoice.speak("Bathtub is full and Ready now");
+        },60000);
+      }
+      else
+         responsiveVoice.speak("Welcome"+str+" Enjoy your Shower"); 
+        flowstatus.text=gusr.fs;//off
+        waterstatus.text=gusr.ws;//bathtub
+        spraystatus.text=gusr.ss;//water saver
+        themestatus.text=gusr.th;//Chicago Skyline
+        tempdisplay.text=String(gusr.tem);
+        drainstatus.text=gusr.dr;
+  }
+    
+  function langch(lid)
+  {  
+    lang=lid;  
+    if(lid==1)
+    {
+        responsiveVoice.speak("español seleccionada");//spanish selected
+        tempheader.text="La temperatura";//temperature
+        flowheader.text="Fluir";//flow
+        flowstatus.text="apagado";//off
+        waterselect.text="agua";//water
+        waterstatus.text="bañera";//bathtub
+        sprayselect.text="tipo de aerosol";//spray type
+        spraystatus.text="ahorrador de agua";//water saver
+        langhead.text="idioma";//language
+        themehead.text="Tema";//Theme
+        themestatus.text="Horizonte de Chicago";//Chicago Skyline
+        drainhead.text="Orificio de drenaje";//drainhole
+        drainstatus.text="Abierto";//open
+        prefhead.text="Usuarios";//users
+        upd.text="Actualizar";//update
+        musichead.text="Música";//Music
+        musicstatus.text="Jugar";//Play
+    }
+    else if(lid==0)
+    {
+        responsiveVoice.speak("English Selected");
+        tempheader.text="Temperature";//temperature
+        flowheader.text="Flow";//flow
+        flowstatus.text="Off";//off
+        waterselect.text="Water";//water
+        waterstatus.text="Bathtub";//bathtub
+        sprayselect.text="Spray Type";//spray type
+        spraystatus.text="Water Saver";//water saver
+        langhead.text="Language";//language
+        themehead.text="Theme";//Theme
+        themestatus.text="Chicago Skyline";//Chicago Skyline
+        drainhead.text="Drain Hole";//drainhole
+        drainstatus.text="Open";//open
+        prefhead.text="Users";
+        upd.text="Update";//update
+        musichead.text="Music";//Music
+        musicstatus.text="Play";//Play
+    }   
+  }
+  var ctrls=new fabric.Rect({
+  left: iControl.left,
+  top: iControl.top+200,
+  originX: 'center',
+  originY: 'center',
+  fill: 'white',
+  stroke: 'black',
+  width: 800,
+  height: 300,
+  angle: 0,
+  name: 'bobo'      
+  }); 
+      
+  var tempheader = new fabric.Text('default', { left: ctrls.left-280, top: ctrls.top-120, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',
+  name: 'bobo',});    
+    tempheader.text="Temperature";
+    //console.log(ctrls);
+    
+    var temp=gtem;
+    var units='C';
+    function updateTemp()
+    {
+      tempdisplay.text=String(temp);
+      tempU.text=' \u00b0'+units;
+      gtem=temp;       
+          
+    }
+    
+    var tempadd = new fabric.Text('default', { left: ctrls.left-200, top: ctrls.top-60, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',
+  textBackgroundColor: 'rgb(194, 209, 239)',                                              
+  name: 'bobo'});    
+    tempadd.text="+";
+    tempadd.on('mousedown',function(){
+    temp++; 
+    if(temp==42||temp==108)
+        if(lang==0)
+            responsiveVoice.speak("Warning! You might experience burning hot water beyond this temperature");
+        else
+            responsiveVoice.speak("¡Advertencia! Es posible experimentar ardor de agua caliente más allá de esta temperatura");
+    updateTemp();
+    canvas.deactivateAll();    
+    });
+    
+    var tempsub = new fabric.Text('default', { left: ctrls.left-350, top: ctrls.top-60, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',textBackgroundColor: 'rgb(194, 209, 239)',
+  name: 'bobo'});    
+    tempsub.text="-";
+    tempsub.evented=true;
+    tempsub.on('mousedown',function(){
+    temp--; 
+    if(temp==21||temp==70)
+        if(lang==0)
+            responsiveVoice.speak("Warning! You might experience ice cold water below this temperature");
+        else
+            responsiveVoice.speak("¡Advertencia! Es posible que experimente hielo de agua fría por debajo de esta temperatura");    
+    updateTemp();
+    canvas.deactivateAll(); 
+    });
+    
+    var tempdisplay = new fabric.Text('default', { left: ctrls.left-290, top: ctrls.top-60, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',
+  name: 'bobo',textBackgroundColor: 'rgb(194, 209, 239)'});    
+    tempdisplay.text=String(gtem);
+    tempdisplay.on('mousedown',function(){
+    if(units=='C')
+    {
+        units='F';
+        temp=(1.8*temp)+32;
+    }
+    else
+    {
+        units='C';
+        temp=(5/9)*(temp-32);
+    } 
+    temp=Math.round(temp);
+    updateTemp();
+    canvas.deactivateAll();    
+        
+    });
+    
+    var tempU = new fabric.Text('default', { left: ctrls.left-255, top: ctrls.top-60, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',
+  name: 'bobo'});    
+    tempU.text=' \u00b0'+units;
+    
+    tempU.on('mousedown',function(){
+    if(units=='C')
+    {
+        units='F';
+        temp=(1.8*temp)+32;
+    }
+    else
+    {
+        units='C';
+        temp=(5/9)*(temp-32);
+    } 
+    temp=Math.round(temp);
+    updateTemp();
+    canvas.deactivateAll();    
+        
+    });
+    
+    var flowheader = new fabric.Text('default', { left: ctrls.left-100, top: ctrls.top-120, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',
+  name: 'bobo'});    
+    flowheader.text="Flow";
+    var flowstatus = new fabric.Text('default', { left: ctrls.left-100, top: ctrls.top-60, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo',textBackgroundColor: 'rgb(194, 209, 239)'});    
+    flowstatus.text=gfs;
+    flowstatus.on('mousedown',function(){
+    if(flowstatus.text=="Low")
+    {
+        flowstatus.text="Medium";
+        gfs=flowstatus.text;
+        fschange();
+        responsiveVoice.speak(flowheader.text +"is"+flowstatus.text);
+        canvas.deactivateAll();
+    }
+    else if(flowstatus.text=="Bajo")
+     {
+        flowstatus.text="Medio";
+        fschange(); 
+        responsiveVoice.speak("El flujo es medio");
+        canvas.deactivateAll();  
+     }    
+     else if(flowstatus.text=="Medium")
+     {
+         flowstatus.text="High";
+         gfs=flowstatus.text;
+         fschange();
+        responsiveVoice.speak(flowheader.text +"is"+flowstatus.text);
+        canvas.deactivateAll();
+     }
+      else if(flowstatus.text=="Medio")
+     {
+        flowstatus.text="Alto";
+         gfs=flowstatus.text;
+         fschange();
+        responsiveVoice.speak("El flujo es alta");
+        canvas.deactivateAll();  
+     }     
+     else if(flowstatus.text=="High")
+     {
+         flowstatus.text="Off";
+         gfs=flowstatus.text;
+         fschange();
+        responsiveVoice.speak(flowheader.text +"is"+flowstatus.text);
+        canvas.deactivateAll();
+     }
+     else if(flowstatus.text=="Alto")
+     {
+        flowstatus.text="Apagado";
+         gfs=flowstatus.text;
+         //fschange();
+        responsiveVoice.speak("El flujo es Apagado");
+        canvas.deactivateAll();  
+     }       
+     else if(lang==0)
+     {
+         flowstatus.text="Low";
+         gfs=flowstatus.text;
+         fschange();
+         responsiveVoice.speak(flowheader.text +"is"+flowstatus.text);
+         canvas.deactivateAll();
+     }
+    else
+    {
+      flowstatus.text="Bajo";
+        gfs=flowstatus.text;
+        fschange();
+        responsiveVoice.speak("El flujo es bajo");
+        canvas.deactivateAll();   
+    }
+    });
+    var waterselect = new fabric.Text('default', { left: ctrls.left+50, top: ctrls.top-120, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo'});    
+    waterselect.text="Water";
+    var waterstatus = new fabric.Text('default', { left: ctrls.left+50, top: ctrls.top-60, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo',textBackgroundColor: 'rgb(194, 209, 239)'});    
+    waterstatus.text=gws;
+    waterstatus.on('mousedown',function(){
+    if(waterstatus.text=="Bathtub")
+    {
+         waterstatus.text="Shower";
+        gws=waterstatus.text;
+        fschange();
+         responsiveVoice.speak(waterselect.text +" to "+waterstatus.text);
+         canvas.deactivateAll(); 
+    }
+     else if(waterstatus.text=="bañera")
+    {
+         waterstatus.text="Ducha";
+         gws=waterstatus.text;
+        fschange();
+         responsiveVoice.speak("agua para la ducha");
+         canvas.deactivateAll(); 
+    }  
+        
+     else if(lang==0) 
+     {
+        waterstatus.text="Bathtub";
+         gws=waterstatus.text;
+         fschange();
+         responsiveVoice.speak(waterselect.text +" to "+waterstatus.text);
+         canvas.deactivateAll();
+     }
+    else
+    {
+       waterstatus.text="bañera";
+        gws=waterstatus.text;
+        fschange();
+         responsiveVoice.speak("agua para bañera");
+         canvas.deactivateAll();   
+    }
+    });
+    
+    var sprayselect = new fabric.Text('default', { left: ctrls.left+140, top: ctrls.top-120, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'left',
+  originY: 'left',name: 'bobo'});    
+    sprayselect.text="Spray Type";
+    var spraystatus = new fabric.Text('default', { left: ctrls.left+140, top: ctrls.top-60, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'left',
+  originY: 'left',name: 'bobo',textBackgroundColor: 'rgb(194, 209, 239)'});    
+    spraystatus.text=gss;
+    spraystatus.on('mousedown',function(){
+    if(spraystatus.text=="Water Saver")
+    {
+        spraystatus.text="Rain Spray";
+        gss=spraystatus.text;
+        responsiveVoice.speak("Rain Spray Type Selected");
+        canvas.deactivateAll();
+    }
+    else if(spraystatus.text=="ahorrador de agua")
+    {
+        spraystatus.text="chorro lluvia";
+        gss=spraystatus.text;
+        responsiveVoice.speak("Tipo de pulverización lluvia Seleccionado");
+        canvas.deactivateAll();
+    }        
+     else if(spraystatus.text=="Rain Spray")
+     {
+         spraystatus.text="Power Spray";
+         gss=spraystatus.text;
+        responsiveVoice.speak("Power Spray Type Selected");
+        canvas.deactivateAll();
+     }
+     else if(spraystatus.text=="chorro lluvia")
+    {
+        spraystatus.text="rociándola";
+        gss=spraystatus.text;
+        responsiveVoice.speak("Tipo de pulverización de potencia seleccionado");
+        canvas.deactivateAll();
+    }    
+     else if(lang==0)
+     {
+        spraystatus.text="Water Saver";
+         gss=spraystatus.text;
+        responsiveVoice.speak("Water Saver Spray Type Selected"); 
+        canvas.deactivateAll();
+     }   
+    else
+    {
+        spraystatus.text="ahorrador de agua";
+        gss=spraystatus.text;
+        responsiveVoice.speak("Ahorro de agua Tipo de pulverización Seleccionado");
+        canvas.deactivateAll();
+    }
+    });
+    var langhead = new fabric.Text('default', { left: ctrls.left-300, top: ctrls.top-10, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo'});    
+    langhead.text="Language";
+    var langstatus = new fabric.Text('default', { left: ctrls.left-300, top: ctrls.top+30, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo',textBackgroundColor: 'rgb(194, 209, 239)'});    
+    langstatus.text=gls;
+    langstatus.on('mousedown',function(){
+    if(langstatus.text=="English")
+    {
+        langstatus.text="Espanol";
+        gls=langstatus.text;
+        langch(1);
+        canvas.deactivateAll();
+    }
+    else if(langstatus.text=="Espanol")
+    {
+        langstatus.text="Portugese";
+        gls=langstatus.text;
+        canvas.deactivateAll();
+    }
+    else if(langstatus.text=="Portugese")
+    {
+        langstatus.text="Hindi";
+        gls=langstatus.text;
+        canvas.deactivateAll();
+    } 
+    else if(langstatus.text=="Hindi")
+    {
+        langstatus.text="Chinese";
+        canvas.deactivateAll();
+    }
+    else if(langstatus.text=="Chinese")
+    {
+        langstatus.text="Russian";
+        canvas.deactivateAll();
+    } 
+    else if(langstatus.text=="Russian")
+    {
+        langstatus.text="Hungarian";
+        canvas.deactivateAll();
+    }
+    else if(langstatus.text=="Hungarian")
+    {
+        langstatus.text="Arabic";
+        canvas.deactivateAll();
+    }  
+    else if(langstatus.text=="Arabic")
+    {
+        langstatus.text="Japanese";
+        canvas.deactivateAll();
+    }
+    else if(langstatus.text=="Japanese")
+    {
+        langstatus.text="Korean";
+        canvas.deactivateAll();
+    } 
+    else
+    {
+        langstatus.text="English";
+        gls=langstatus.text;
+        langch(0);
+        canvas.deactivateAll(); 
+    }
+    });
+    var themehead = new fabric.Text('default', { left: ctrls.left-30, top: ctrls.top-10, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo'});    
+    themehead.text="Theme";
+    var themestatus = new fabric.Text('default', { left: ctrls.left-30, top: ctrls.top+30, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo',textBackgroundColor: 'rgb(194, 209, 239)'});    
+    themestatus.text=gth;   
+    themestatus.on('mousedown',function(){
+    if(themestatus.text=="Chicago Skyline")
+    {
+        themestatus.text="Chicago Night";
+        gth=themestatus.text;
+        canvas.deactivateAll();
+        responsiveVoice.speak(themestatus.text);
+        canvas.setBackgroundImage('images/cn.jpg',                          canvas.renderAll.bind(canvas));
+    }
+    else if(themestatus.text=="Chicago Night"||themestatus.text=="la noche de Chicago")
+    {
+        themestatus.text="Disney";
+        gth=themestatus.text;
+        canvas.deactivateAll();
+        responsiveVoice.speak(themestatus.text);
+        canvas.setBackgroundImage('images/mn.jpg', canvas.renderAll.bind(canvas));
+    }
+    else if(themestatus.text=="Disney"&& lang==0)
+    {
+        themestatus.text="Jelly Fish";
+        gth=themestatus.text;
+        canvas.deactivateAll();
+        responsiveVoice.speak(themestatus.text);
+        canvas.setBackgroundImage('images/jf.jpg', canvas.renderAll.bind(canvas));
+    }
+    else if(themestatus.text=="Jelly Fish")
+    {
+        themestatus.text="Nature";
+        gth=themestatus.text;
+        canvas.deactivateAll();
+        responsiveVoice.speak(themestatus.text);
+        canvas.setBackgroundImage('images/na.jpg', canvas.renderAll.bind(canvas));
+    }
+//        
+else if(themestatus.text=="Horizonte de Chicago")
+    {
+        themestatus.text="la noche de Chicago";
+        gth=themestatus.text;
+        canvas.deactivateAll();
+        responsiveVoice.speak(themestatus.text);
+        canvas.setBackgroundImage('images/cn.jpg', canvas.renderAll.bind(canvas));
+        
+    }
+    else if(themestatus.text=="Disney" && lang==1)
+    {
+        themestatus.text="Medusa";
+        gth=themestatus.text;
+        canvas.deactivateAll();
+        responsiveVoice.speak(themestatus.text);
+        canvas.setBackgroundImage('images/jf.jpg', canvas.renderAll.bind(canvas));
+    }
+    else if(themestatus.text=="Medusa")
+    {
+        themestatus.text="Naturaleza";
+        gth=themestatus.text;
+        canvas.deactivateAll();
+        responsiveVoice.speak(themestatus.text);
+        canvas.setBackgroundImage('images/na.jpg', canvas.renderAll.bind(canvas));
+    }          
+      else if(lang==1)
+    {
+        themestatus.text="Horizonte de Chicago";
+        gth=themestatus.text;
+        canvas.deactivateAll();
+        responsiveVoice.speak(themestatus.text);
+        canvas.setBackgroundImage('images/cl.jpg', canvas.renderAll.bind(canvas));
+        canvas.deactivateAll();
+    }
+    else
+    {
+        themestatus.text="Chicago Skyline";
+        gth=themestatus.text;
+        canvas.deactivateAll();
+        responsiveVoice.speak(themestatus.text);
+        canvas.setBackgroundImage('images/cl.jpg', canvas.renderAll.bind(canvas));
+        
+    }
+        
+        
+    });
+    var prefhead = new fabric.Text('default', { left: ctrls.left-250, top: ctrls.top+80, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo'});    
+    prefhead.text="Users";
+    var prefstatus = new fabric.Text('default', { left: ctrls.left-320, top: ctrls.top+120, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo',textBackgroundColor: 'rgb(194, 209, 239)'});
+    prefstatus.text=gusr.name;   
+    prefstatus.on('mousedown',function(){
+    if(prefstatus.text=="James")
+    {
+        gusr=ma;
+        prefstatus.text=gusr.name;
+        fschange();
+        canvas.setBackgroundImage('images/cn.jpg', canvas.renderAll.bind(canvas));
+        userch(prefstatus.text);
+        canvas.deactivateAll();
+    }
+    else if(prefstatus.text=="Mary")
+    {
+        gusr=jh;
+        prefstatus.text=gusr.name;
+        fschange();
+        canvas.setBackgroundImage('images/mn.jpg', canvas.renderAll.bind(canvas));
+        userch(prefstatus.text);
+        canvas.deactivateAll();
+    }
+    else if(prefstatus.text=="John")
+    {
+        gusr=gue1;
+        prefstatus.text=gusr.name;
+        fschange();
+        canvas.setBackgroundImage('images/mn.jpg', canvas.renderAll.bind(canvas));
+        userch(prefstatus.text);
+        canvas.deactivateAll();
+    }
+    else if(prefstatus.text=="Guest 1")
+    {
+       gusr=gue2;
+        prefstatus.text=gusr.name;
+        fschange();
+        canvas.setBackgroundImage('images/mn.jpg', canvas.renderAll.bind(canvas));
+        userch(prefstatus.text);
+        canvas.deactivateAll();
+    }
+    else
+    {
+       gusr=jm;
+        prefstatus.text=gusr.name;
+        fschange();
+        canvas.setBackgroundImage('images/cl.jpg', canvas.renderAll.bind(canvas));
+        userch(prefstatus.text);
+        canvas.deactivateAll();
+    }    
+    });
+    var upd = new fabric.Text('default', { left: ctrls.left-190, top: ctrls.top+120, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo',textBackgroundColor: 'rgb(194, 209, 239)'});
+    upd.text="Update";
+    upd.on('mousedown',function(){update();});
+    var drainhead = new fabric.Text('default', { left: ctrls.left+250, top: ctrls.top-10, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo'});    
+    drainhead.text="Drain Hole";
+    var drainstatus = new fabric.Text('default', { left: ctrls.left+250, top: ctrls.top+30, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo',textBackgroundColor: 'rgb(194, 209, 239)'});    
+    drainstatus.text=gusr.dr;   
+    drainstatus.on('mousedown',function(){
+    if(drainstatus.text=="Open")
+    {
+     drainstatus.text="Closed";
+     responsiveVoice.speak("Drain Hole Closed");   
+     gdr=drainstatus.text;
+    }
+    else if(drainstatus.text=="Abierto")
+    {
+     drainstatus.text="Cerrado";
+     responsiveVoice.speak("Orificio de drenaje cerrado");    
+     gdr=drainstatus.text; 
+    }
+    else if(drainstatus.text=="Cerrado")
+    {
+      drainstatus.text="Abierto";
+      responsiveVoice.speak("Orificio de drenaje , inaugurado");   
+     gdr=drainstatus.text;  
+    }
+    else
+    {
+      drainstatus.text="Open";
+      responsiveVoice.speak("Drain Hole Opened");  
+     gdr=drainstatus.text;  
+    }
+    });
+    var musichead = new fabric.Text('default', { left: ctrls.left-60, top: ctrls.top+80, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo'});    
+    musichead.text="Music";
+    
+    var newshead = new fabric.Text('default', { left: ctrls.left+40, top: ctrls.top+80, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo',textBackgroundColor: 'rgb(194, 209, 239)'});    
+    newshead.text=" \uD83D\uDCF0 ";
+    newshead.on('mousedown',function(){
+        if(gusr.ls=="English")
+        {
+          responsiveVoice.speak("Hello "+gusr.name);   
+          responsiveVoice.speak("Polls: Trump, Sanders hold leads");
+          responsiveVoice.speak("Cop sues estate of teen he killed");
+          responsiveVoice.speak("Super Bowl ad sparks backlash");
+        }
+        else
+        {
+          responsiveVoice.speak("Hola "+gusr.name);   
+          responsiveVoice.speak("Sondeo : Trump , cables de retención Sanders");
+          responsiveVoice.speak("Cop demanda raíces de adolescente que mató");
+          responsiveVoice.speak("Anuncio de Super Bowl chispas reacción violenta");   
+        }
+        canvas.deactivateAll();
+    });
+    var videohead = new fabric.Text('default', { left: ctrls.left+40, top: ctrls.top+120, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo',textBackgroundColor: 'rgb(194, 209, 239)'});    
+    videohead.text=" \uD83D\uDCFA ";
+    videohead.on('mousedown',function(){
+      canvas.add(video2);
+  video2.getElement().play();
+  fabric.util.requestAnimFrame(function render() {
+  canvas.renderAll();
+  fabric.util.requestAnimFrame(render);
+   });    
+  canvas.deactivateAll();
+    });  
+                 
+                 
+                 
+    var musicstatus = new fabric.Text('default', { left: ctrls.left-60, top: ctrls.top+120, fontFamily: 'Arial', fontSize: 30, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo',textBackgroundColor: 'rgb(194, 209, 239)'});
+    musicstatus.text="Play";
+    var mySound = new buzz.sound( "images/adele", {
+    formats: ["mp3"]
+});
+    musicstatus.on('mousedown',function(){
+    if(musicstatus.text=="Play")
+    {
+     musicstatus.text="Pause";
+     mySound.loop().play(); 
+     canvas.deactivateAll();    
+    }
+    else if(musicstatus.text=="Jugar")
+    {
+     musicstatus.text="Pausa";
+     mySound.loop().play(); 
+     canvas.deactivateAll();    
+    }
+    else if(musicstatus.text=="Pausa")
+    {
+     musicstatus.text="Jugar";
+     mySound.pause(); 
+     canvas.deactivateAll();    
+    }
+    else
+    {
+      musicstatus.text="Play"; 
+      mySound.pause();   
+      canvas.deactivateAll();    
+    }
+    });
+    
+    var loc = new fabric.Text('default', { left: ctrls.left+215, top: ctrls.top+80, fontFamily: 'Arial', fontSize: 20, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo'});
+    loc.text="Chicago,IL Mon 9 Feb 2016"; 
+    var weath = new fabric.Text('default', { left: ctrls.left+200, top: ctrls.top+120, fontFamily: 'Arial', fontSize: 20, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo'});
+    weath.text="Time:7:00 AM  Weather:";
+    var wunits = new fabric.Text('default', { left: ctrls.left+345, top: ctrls.top+120, fontFamily: 'Arial', fontSize: 20, fontWeight: 'Bold', originX: 'center',
+  originY: 'center',name: 'bobo',textBackgroundColor: 'rgb(194, 209, 239)'});
+    wunits.text="29"+' \u00b0'+"F";
+    wunits.on('mousedown',function(){
+    if(wunits.text=="29"+' \u00b0'+"F")
+    {    wunits.text="-2"+' \u00b0'+"C";
+        canvas.deactivateAll();}
+    else
+    {
+       wunits.text="29"+' \u00b0'+"F";
+        canvas.deactivateAll();
+    }
+    })
+    canvas.add(ctrls);
+    canvas.add(tempheader);
+    canvas.add(tempadd);
+    canvas.add(tempsub);
+     canvas.add(flowheader,flowstatus,waterstatus,waterselect,sprayselect,spraystatus,langhead,langstatus,themehead,themestatus,prefhead,prefstatus,drainhead,drainstatus,upd,musichead,musicstatus,loc,weath,wunits,newshead,videohead);
+    canvas.add(tempdisplay,tempU);
+    
+canvas.deactivateAll();    
+});
+
+//iControl.hasControls = iControl.hasBorders = false;    
+
+var path1 =new fabric.Path('M 450 0 L 450 990');
+path1.set({fill:'black',stroke:'black'});
+var path2 =new fabric.Path('M 1440 0 L 1440 990');
+path2.set({fill:'black',stroke:'black'});
+// the spout is selectable and movable
+// this is a nice part of fabric where you can interactively move elements around
+// on the canvas to see what locations and sizes work better, then lock them down
+//bathSpout.hasControls = bathSpout.hasBorders = false;
+//bathSpout.lockMovementX = bathSpout.lockMovementY = true;
+
+
+// create a circle for the shower head location
+
+
+
+// add all of the elements to the canvas
+    
+//canvas.add(backWall);     
+//canvas.add(sideWall);
+//canvas.add(frontWall);  
+//
+//canvas.add(waterControl);
+//canvas.add(tempText);
+  
+canvas.add(iControl); 
+canvas.add(iControltext);    
+//canvas.add(bathSpout,showerHead);  
+canvas.add(path1,path2);    
+canvas.setBackgroundImage('images/cl.jpg', canvas.renderAll.bind(canvas));    
+ canvas.deactivateAll();     
+// code adapted from http://jsfiddle.net/tornado1979/39up3jcm/
+// this code deals with scaling all the elements on the canvas
+
+function zoomAll(SCALE_FACTOR) {
+
+      var objects = canvas.getObjects();
+      for (var i in objects) {
+          var scaleX = objects[i].scaleX;
+          var scaleY = objects[i].scaleY;
+          var left = objects[i].left;
+          var top = objects[i].top;
+
+          var tempScaleX = scaleX * SCALE_FACTOR;
+          var tempScaleY = scaleY * SCALE_FACTOR;
+          var tempLeft = left * SCALE_FACTOR;
+          var tempTop = top * SCALE_FACTOR;
+
+          objects[i].scaleX = tempScaleX;
+          objects[i].scaleY = tempScaleY;
+          objects[i].left = tempLeft;
+          objects[i].top = tempTop;
+
+          objects[i].setCoords();
+      }
+  
+      canvas.renderAll();
+  }
+
+// draw everything at the appropriate scale for this canvas
+zoomAll(canvas.height / localHeight);
+
+})();
+
+</script>
+		
+</head>
+  
+</html>
