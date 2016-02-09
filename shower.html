@@ -23,7 +23,9 @@
 </body>
  
 <script>
-
+window.onload = function() {
+  responsiveVoice.speak("Welcome to the Next generation Shower, I can listen to you, try saying things like  News and Watch TV any time");
+};
 (function() {
 
 // within the code below I assume I am drawing into a 1860x990 box
@@ -222,6 +224,7 @@ var iControl = new fabric.Circle({
   opacity:0.6,    
   radius: 40
 });
+   
 var iControltext = new fabric.Text('default', { left: iControl.left, top: iControl.top, fontFamily: 'Arial', fontSize: 10, fontWeight: 'Bold', originX: 'center',
   originY: 'center',
   name: 'bobo',}); 
@@ -236,7 +239,8 @@ var jh={name:"John",fs:"Medium",ws:"Shower",ss:"Water Saver",tem:38,th:"Disney",
 var gue1={name:"Guest 1",fs:"Medium",ws:"Shower",ss:"Water Saver",tem:38,th:"Disney",ls:"English",dr:"Open"};
 var gue2={name:"Guest 2",fs:"High",ws:"Shower",ss:"Water Saver",tem:38,th:"Disney",ls:"English",dr:"Open"};    
 var gusr=jm;
-console.log(gusr);    
+console.log(gusr);
+        
 iControl.on('mouseup',function() {    
   //console.log(iControl);
 //  canvas.getObjects().forEach(
@@ -987,7 +991,8 @@ path2.set({fill:'black',stroke:'black'});
 //canvas.add(tempText);
   
 canvas.add(iControl); 
-canvas.add(iControltext);    
+canvas.add(iControltext);
+    
 //canvas.add(bathSpout,showerHead);  
 canvas.add(path1,path2);    
 canvas.setBackgroundImage('images/cl.jpg', canvas.renderAll.bind(canvas));    
